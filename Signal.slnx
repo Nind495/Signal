@@ -1,0 +1,5 @@
+<Solution>
+  <Folder Name="/Элементы решения/" />
+  <Project Path="SignalLib/SignalLib.csproj" />
+  <Project Path="Signal/SignalForm.csproj" />
+</Solution>

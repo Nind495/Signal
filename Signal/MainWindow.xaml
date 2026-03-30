@@ -1,0 +1,74 @@
+﻿<Window x:Class="WpfApp1.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:ScottPlot="clr-namespace:ScottPlot.WPF;assembly=ScottPlot.WPF"
+        Title="Генерация сигналов" Height="700" Width="900">
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="0,0,0,10">
+            <StackPanel Margin="10,0">
+                <Label Content="Частота"/>
+                <TextBox x:Name="FrequencyTextBox" Width="80" Text="0,5"/>
+            </StackPanel>
+            <StackPanel Margin="10,0">
+                <Label Content="Фаза"/>
+                <TextBox x:Name="PhaseTextBox" Width="80" Text="10"/>
+            </StackPanel>
+            <StackPanel Margin="10,0">
+                <Label Content="Амплитуда"/>
+                <TextBox x:Name="AmplitudeTextBox" Width="80" Text="1"/>
+            </StackPanel>
+            <StackPanel Margin="10,0">
+                <Label Content="Время от" Width="77"/>
+                <TextBox x:Name="DataStartTextBox" Width="80" Text="1"/>
+            </StackPanel>
+            <StackPanel>
+                <Label Content="Время до"/>
+                <TextBox x:Name="TimeToTextBox" Width="80" Text="5"/>
+            </StackPanel>
+            <StackPanel Margin="10,0">
+                <Label Content="Колличество точек"/>
+                <TextBox x:Name="PointsTextBox" Width="80" Text="5"/>
+            </StackPanel>
+            <StackPanel Margin="10,0">
+                <Label Content="Тип сигнала"/>
+                <ComboBox x:Name="SignalTypeComboBox"  SelectedIndex="0" Width="120">
+                </ComboBox>
+            </StackPanel>
+            <Button x:Name="GenerateButton" Content="Генерировать" Width="120" Click="GenerateButton_Click"/>
+        </StackPanel>
+        <Border Grid.Row="1" BorderBrush="Gray" BorderThickness="1" Margin="0,0,0,10" Height="300">
+            <ScottPlot:WpfPlot x:Name="WpfPlot1" />
+        </Border>
+        <StackPanel Grid.Row="2" Margin="0,0,0,10">
+            <Label Content="Сохранённые сигналы:"/>
+            <Grid Height="200" >
+                <DataGrid x:Name="dgHistory" ItemsSource="{Binding SignalHistory}" AutoGenerateColumns="False" IsReadOnly="True" SelectionMode="Extended">
+                    <DataGrid.Columns>
+                        <DataGridCheckBoxColumn></DataGridCheckBoxColumn>
+                        <DataGridTextColumn Binding="{Binding Id}" Header="ID сигнала "></DataGridTextColumn>
+                        <DataGridTextColumn Binding="{Binding GenerationDate}" Header="Время создания"></DataGridTextColumn>
+                        <DataGridTextColumn Header="Описание"></DataGridTextColumn>
+                        <DataGridTextColumn Binding="{Binding Parameters}"  Header="Параметры"></DataGridTextColumn>
+                        <DataGridTextColumn Binding="{Binding SignalType}" Header="Тип сигнала"></DataGridTextColumn>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </Grid>
+        </StackPanel>
+        <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,10" >
+            <Button x:Name="SaveButton" Content="Сохранить" Width="80" Margin="5" Click="SaveButton_Click" />
+            <Button x:Name="LoadButton" Content="Загрузить" Width="80" Margin="5"  Click="LoadButton_Click" />
+            <Button x:Name="ClearButton" Content="Очистить" Width="80" Margin="5" Click="ClearButton_Click" />
+            <Button x:Name="CancelButton" Content="Отмена" Width="80" Margin="5"  Click="CancelButton_Click" Command ="{Binding StartProcessingCommand}" />
+            <Button Name="PrevPageBtn" Content="Назад" Width="80" Margin="5" Click="PrevPageBtn_Click"/>
+            <Button Name="NextPageBtn" Content="Вперед" Width="80" Margin="5" Click="NextPageBtn_Click"/>
+        </StackPanel>
+        <ProgressBar x:Name="ProgressBar" Grid.Row="4" Height="20" IsIndeterminate="False" Minimum="0" Maximum="100" Visibility="Visible"/>
+    </Grid>
+</Window>
